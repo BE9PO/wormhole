@@ -35,7 +35,6 @@ public class MainController {
 
     @PostMapping("/main")
     public String add(
-            @AuthenticationPrincipal User user,
             @RequestParam String text, Model model
     ) {
         Message n = new Message();

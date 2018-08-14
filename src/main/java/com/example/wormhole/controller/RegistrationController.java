@@ -1,5 +1,6 @@
 package com.example.wormhole.controller;
 
+import com.example.wormhole.domain.Role;
 import com.example.wormhole.domain.User;
 import com.example.wormhole.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Collections;
 
 @Controller
 public class RegistrationController {
@@ -28,6 +31,7 @@ public class RegistrationController {
             return "registration";
         }
         user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
         return "redirect:/login";
     }
