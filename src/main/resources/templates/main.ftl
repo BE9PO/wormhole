@@ -6,10 +6,10 @@
 </div>
 
 <div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <input type="text" name="text" placeholder="Intut text">
-        <input type="hidden" name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
+        <input type="file" name="file">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit"> Edd</button>
     </form>
 </div>

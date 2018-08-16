@@ -20,6 +20,9 @@ public class Message {
 
     private Long departureDate;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "file_image")
+    @Enumerated(EnumType.STRING)
     public Set<FileImage> getImages() {
         return images;
     }
