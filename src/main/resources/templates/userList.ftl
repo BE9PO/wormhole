@@ -12,9 +12,9 @@
     <tbody>
       <#list users as user>
       <tr>
-          <td>${user.name}</td>
-          <td>${user.role}</td>
-          <td><a href="/user/${user.id}">edit</a> </td>
+          <td>${user.getUsername()}</td>
+          <td>${user.getRoles()}</td>
+          <td><a href="/user/${user.getId()}">edit</a> </td>
       </tr>
 
       </#list>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 
@@ -25,7 +24,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model){
-        User userFromDb = userRepository.findByName(user.getName());
+        User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb!=null){
             model.addAttribute("message","User already exist");
             return "registration";
