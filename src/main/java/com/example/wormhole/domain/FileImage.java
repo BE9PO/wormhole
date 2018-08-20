@@ -20,6 +20,8 @@ public class FileImage {
 
     private Long dateOfLoad;
 
+    private String pathToFile;
+
     public Long getId() {
         return id;
     }
@@ -58,5 +60,13 @@ public class FileImage {
 
     public void setDateOfLoad(Long dateOfLoad) {
         this.dateOfLoad = dateOfLoad;
+    }
+
+    public String getPathToFile() {
+        return pathToFile;
+    }
+
+    public void setPathToFile(String pathToFile) {
+        this.pathToFile = pathToFile;
     }
 }
