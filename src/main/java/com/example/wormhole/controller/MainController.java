@@ -1,6 +1,6 @@
 package com.example.wormhole.controller;
 
-import com.example.wormhole.crypt.CrypterFile;
+import com.example.wormhole.service.CryptFileService;
 import com.example.wormhole.domain.FileImage;
 import com.example.wormhole.domain.Message;
 import com.example.wormhole.repository.FileImageRepository;
@@ -18,7 +18,6 @@ import java.io.IOException;
 
 @Controller
 public class MainController {
-
     private final MessageRepository messageRepository;
     private final FileImageRepository imageRepository;
 
@@ -53,16 +52,19 @@ public class MainController {
         if (file != null) {
             FileImage newFile = new FileImage();
             //TODO ПОТОК??
-            CrypterFile crypterFile = new CrypterFile();
 
-            String path = crypterFile.encryptFile(file.getBytes(), "asda", file.getName() + System.currentTimeMillis());
-
-            newFile.setName("asd");
+            CryptFileService cryptFileService = new CryptFileService();
+            String path = cryptFileService.encryptFile(file.getBytes(),
+                    "asda",
+                    file.getName() + System.currentTimeMillis()
+            );
+            newFile.setName(file.getName());
             newFile.setDateOfLoad(System.currentTimeMillis());
             newFile.setPathToFile(path);
             imageRepository.save(newFile);
         }
         n.setMessage(text);
+
         messageRepository.save(n);
 
         Iterable<Message> messages = messageRepository.findAll();
