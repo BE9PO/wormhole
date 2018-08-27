@@ -27,7 +27,6 @@ public class CryptFileService {
         String salt = "fd00000aa8660b5b010006acdc0100000101000100010000";
         BytesEncryptor bytesDecrypt = Encryptors.standard(password, salt);
         byte[] decrypted = bytesDecrypt.decrypt(multiPartFile);
-        String sdsa = "s";
         return decrypted;
     }
 

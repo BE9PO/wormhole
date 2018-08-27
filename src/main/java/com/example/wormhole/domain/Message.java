@@ -1,7 +1,7 @@
 package com.example.wormhole.domain;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Message {
@@ -14,7 +14,7 @@ public class Message {
     private String message;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<FileImage> images;
+    private List<FileImage> images;
 
     private Long timeOfDestruction;
 
@@ -23,11 +23,11 @@ public class Message {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "file_image")
     @Enumerated(EnumType.STRING)
-    public Set<FileImage> getImages() {
+    public List<FileImage> getImages() {
         return images;
     }
 
-    public void setImages(Set<FileImage> images) {
+    public void setImages(List<FileImage> images) {
         this.images = images;
     }
 

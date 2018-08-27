@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,14 +29,16 @@ public class User implements UserDetails {
 
     private Long dateOfRegistration;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<FileImage> images;
 
-    public Set<FileImage> getImages() {
+    @ElementCollection(targetClass = FileImage.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_images", joinColumns = @JoinColumn(name = "user_id"))
+    private List<FileImage> images;
+
+    public List<FileImage> getImages() {
         return images;
     }
 
-    public void setImages(Set<FileImage> images) {
+    public void setImages(List<FileImage> images) {
         this.images = images;
     }
 
@@ -120,5 +123,4 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 }

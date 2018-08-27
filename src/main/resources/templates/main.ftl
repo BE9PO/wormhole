@@ -27,6 +27,12 @@
             <p>
                 <b>${message.id}</b>
                 <spanp>${message.message}</spanp>
+                <#list message.getImages() as images>
+                ${images.getPathToFile()}
+                </#list>
+                <div>
+                ${bytesFile}
+        </div>
             </p>
         </#list>
     </div>
