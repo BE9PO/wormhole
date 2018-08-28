@@ -2,14 +2,10 @@ package com.example.wormhole.controller;
 
 import com.example.wormhole.domain.FileImage;
 import com.example.wormhole.domain.Message;
-import com.example.wormhole.domain.User;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
-import com.example.wormhole.service.CryptFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,23 +13,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class MainController {
     private final MessageRepository messageRepository;
     private final FileImageRepository imageRepository;
 
-    @Autowired
-    public MainController(MessageRepository messageRepository, FileImageRepository imageRepository) {
-        this.messageRepository = messageRepository;
-        this.imageRepository = imageRepository;
-    }
-
     @Value("${upload.path}")
-    public String path;
+    private String uploadPath;
+
+    @Autowired
+    public MainController(MessageRepository messageRepository, FileImageRepository imageRepository, FileImageRepository imageRepository1) {
+        this.messageRepository = messageRepository;
+        this.imageRepository = imageRepository1;
+    }
 
     @GetMapping("/")
     public String greeting(Model model) {
@@ -53,37 +51,32 @@ public class MainController {
             @RequestParam("file") MultipartFile file,
             Model model
     ) throws IOException {
-        Message n = new Message();
-        FileImage newFile = new FileImage();
-        File decrypted;
-        if (file != null) {
-            //холдер для проверки вощедщего юзера
-            SecurityContext holder = SecurityContextHolder.getContext();
-            User user = (User) holder.getAuthentication().getPrincipal();
-
-            CryptFileService cryptFileService = new CryptFileService();
-            String path = cryptFileService.encryptFile(file.getBytes(),
-                    "asda",
-                    file.getOriginalFilename() + System.currentTimeMillis()
-            );
-            newFile.setName(file.getOriginalFilename());
-            newFile.setDateOfLoad(System.currentTimeMillis());
-            newFile.setPathToFile(path);
-
-
-        }
-        n.setMessage(text);
+        Message newMessage = new Message();
+        //temp list
         List<FileImage> fileImages = new ArrayList<>();
-        fileImages.add(newFile);
-        n.setImages(fileImages);
+        FileImage fileImage = new FileImage();
+
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            fileImage.setName(resultFileName);
+            fileImage.setDateOfLoad(System.currentTimeMillis());
+        }
 
 
-
-        imageRepository.save(newFile);
-        messageRepository.save(n);
+        fileImages.add(fileImage);
+        newMessage.setMessage(text);
+        newMessage.setImages(fileImages);
+        //save fileImage
+        imageRepository.save(fileImage);
+        messageRepository.save(newMessage);
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
-        model.addAttribute("bytesFile",decrypted);
         return "main";
     }
 

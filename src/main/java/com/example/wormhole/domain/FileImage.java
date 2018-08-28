@@ -14,13 +14,7 @@ public class FileImage {
 
     private String name;
 
-    private Long size;
-
-    private String extension;
-
     private Long dateOfLoad;
-
-    private String pathToFile;
 
     public Long getId() {
         return id;
@@ -38,22 +32,6 @@ public class FileImage {
         this.name = name;
     }
 
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
     public Long getDateOfLoad() {
         return dateOfLoad;
     }
@@ -62,11 +40,4 @@ public class FileImage {
         this.dateOfLoad = dateOfLoad;
     }
 
-    public String getPathToFile() {
-        return pathToFile;
-    }
-
-    public void setPathToFile(String pathToFile) {
-        this.pathToFile = pathToFile;
-    }
 }

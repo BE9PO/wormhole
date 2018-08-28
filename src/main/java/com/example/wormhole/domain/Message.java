@@ -13,16 +13,14 @@ public class Message {
 
     private String message;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = FileImage.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "message_images")
     private List<FileImage> images;
 
     private Long timeOfDestruction;
 
     private Long departureDate;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "file_image")
-    @Enumerated(EnumType.STRING)
     public List<FileImage> getImages() {
         return images;
     }

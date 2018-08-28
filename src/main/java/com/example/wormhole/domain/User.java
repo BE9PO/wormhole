@@ -29,10 +29,13 @@ public class User implements UserDetails {
 
     private Long dateOfRegistration;
 
-
     @ElementCollection(targetClass = FileImage.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_images", joinColumns = @JoinColumn(name = "user_id"))
     private List<FileImage> images;
+
+    public boolean isAdmin() {
+        return getRoles().contains(Role.ADMIN);
+    }
 
     public List<FileImage> getImages() {
         return images;

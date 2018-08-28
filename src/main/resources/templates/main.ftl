@@ -1,40 +1,55 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 <@c.page>
-<div>
-    <@l.logout></@l.logout>
-</div>
+<#--<div class="form-row">-->
+<#--<div class="form-group col-md-6">-->
+<#--<form method="get" action="/main" class="form-inline">-->
+<#--<input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Search by tag">-->
+<#--<button type="submit" class="btn btn-primary ml-2">Search</button>-->
+<#--</form>-->
+<#--</div>-->
+<#--</div>-->
 
-<div>
-    <form method="post" enctype="multipart/form-data">
-        <input type="text" name="text" placeholder="Input text">
-        <input type="file" name="file">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit"> Edd</button>
-    </form>
-</div>
-
-<div>
-    <div> Список сообщений</div>
-    <form method="post" action="filter">
-        <input type="text" name="filter">
-        <input type="hidden" name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-        <button type="submit">FindByMessage</button>
-    </form>
-    <div>
-        <#list messages as message>
-            <p>
-                <b>${message.id}</b>
-                <spanp>${message.message}</spanp>
-                <#list message.getImages() as images>
-                ${images.getPathToFile()}
-                </#list>
-                <div>
-                ${bytesFile}
-        </div>
-            </p>
-        </#list>
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+   aria-controls="collapseExample">
+    Add new Message
+</a>
+<div class="collapse" id="collapseExample">
+    <div class="form-group mt-3">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" class="form-control" name="text" placeholder="Введите сообщение"/>
+            </div>
+            <div class="form-group">
+                <div class="custom-file">
+                    <input type="file" name="file" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+        </form>
     </div>
+</div>
+
+<div class="card-columns">
+    <#list messages as message>
+        <div class="card my-3">
+        <#if message.getMessage()??>
+            <#list message.getImages() as image>
+                  <img class="card-img-top" src="img/${image.getName()}">
+            </#list>
+            <div class="m-2">
+                <span>${message.getMessage()}</span>
+            </div>
+            <div class="card-footer text-muted">
+                ${message.getId()}
+            </div>
+        </#if>
+        </div>
+    <#else>
+        No message
+    </#list>
 </div>
 </@c.page>

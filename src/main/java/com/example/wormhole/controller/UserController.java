@@ -10,12 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
+    final
     UserRepository userRepository;
 
+    @Autowired
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @GetMapping
-    public String userList(Model model){
-        model.addAttribute("users",userRepository.findAll());
+    public String userList(Model model) {
+        model.addAttribute("users", userRepository.findAll());
         return "userList";
     }
 }
