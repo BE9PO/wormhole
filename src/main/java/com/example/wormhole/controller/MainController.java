@@ -4,6 +4,7 @@ import com.example.wormhole.domain.FileImage;
 import com.example.wormhole.domain.Message;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
+import com.example.wormhole.service.CryptFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,9 +55,9 @@ public class MainController {
             Model model
     ) throws IOException {
         Message newMessage = new Message();
-        //temp list
         List<FileImage> fileImages = new ArrayList<>();
         FileImage fileImage = new FileImage();
+        CryptFileService cryptFileService = new CryptFileService();
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
@@ -63,9 +66,17 @@ public class MainController {
             }
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
+            cryptFileService.encryptBytes(file.getBytes(), "1", resultFileName);
+            InputStream inputStream = new FileInputStream(new File(uploadDir + "/" + resultFileName));
+            byte[] decryptedBytes = cryptFileService.decryptBytes(inputStream.readAllBytes(), "1");
+            File tempFile = cryptFileService.getTempFile(decryptedBytes, resultFileName);
+
+
+            //file.transferTo(new File(uploadPath + "/" + resultFileName));
+            file.transferTo(tempFile);
             fileImage.setName(resultFileName);
             fileImage.setDateOfLoad(System.currentTimeMillis());
+
         }
 
 
