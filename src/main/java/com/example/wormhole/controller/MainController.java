@@ -1,7 +1,9 @@
 package com.example.wormhole.controller;
 
+import com.example.wormhole.domain.Examination;
 import com.example.wormhole.domain.FileImage;
 import com.example.wormhole.domain.Message;
+import com.example.wormhole.repository.ExaminationRepository;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
 import com.example.wormhole.service.CryptFileService;
@@ -26,14 +28,17 @@ import java.util.UUID;
 public class MainController {
     private final MessageRepository messageRepository;
     private final FileImageRepository imageRepository;
+    private final ExaminationRepository examinationRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     @Autowired
-    public MainController(MessageRepository messageRepository, FileImageRepository imageRepository, FileImageRepository imageRepository1) {
+    public MainController(MessageRepository messageRepository, FileImageRepository imageRepository, FileImageRepository imageRepository1,
+                          ExaminationRepository examinationRepository) {
         this.messageRepository = messageRepository;
         this.imageRepository = imageRepository1;
+        this.examinationRepository = examinationRepository;
     }
 
     @GetMapping("/")
@@ -46,6 +51,13 @@ public class MainController {
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
         return "main";
+    }
+
+    @GetMapping("solve")
+    public String solve (Model model){
+        Iterable<Examination> examinations = examinationRepository.findAll();
+        model.addAttribute("exps",examinations);
+        return "solve";
     }
 
     @PostMapping("/main")
