@@ -10,7 +10,7 @@ public class Examination {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int code;
+    private String code;
 
     private Date dateInput;
 
@@ -37,11 +37,11 @@ public class Examination {
         this.id = id;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

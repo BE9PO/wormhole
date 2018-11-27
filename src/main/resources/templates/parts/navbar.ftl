@@ -15,6 +15,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/solve">LIST EXP</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/addExp">ADD EXP</a>
+            </li>
             <#if isAdmin>
             <li class="nav-item">
                 <a class="nav-link" href="/userList">User list</a>

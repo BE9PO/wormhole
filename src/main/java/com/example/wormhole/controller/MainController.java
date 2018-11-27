@@ -53,7 +53,7 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("solve")
+    @GetMapping("/solve")
     public String solve (Model model){
         Iterable<Examination> examinations = examinationRepository.findAll();
         model.addAttribute("exps",examinations);
@@ -116,4 +116,19 @@ public class MainController {
         model.addAttribute("messages", messageList);
         return "main";
     }
+
+    @PostMapping("addExp")
+    public String addExp(@RequestParam String code, Model model) {
+        Examination examination = new Examination();
+
+        examination.setCode(code);
+        examinationRepository.save(examination);
+        return "main";
+    }
+
+    @GetMapping("/addExp")
+    public  String addExp (Model model){
+        return "addExp";
+    }
+
 }
