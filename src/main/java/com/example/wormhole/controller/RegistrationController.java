@@ -23,7 +23,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    public String addUser(User user,
+                          String fullName,
+                          String surname,
+                          Model model) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
             model.addAttribute("message", "User already exist");
@@ -31,6 +34,9 @@ public class RegistrationController {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        user.setFullUserName(fullName);
+        user.setFullUserSurname(surname);
+        user.setDateOfRegistration(System.currentTimeMillis());
         userRepository.save(user);
         return "redirect:/login";
     }

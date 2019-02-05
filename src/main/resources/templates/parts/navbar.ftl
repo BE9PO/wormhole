@@ -10,26 +10,17 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/solve">view the list</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/main">Messages</a>
+                <a class="nav-link" href="/addExp">add to the list</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/solve">LIST EXP</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/addExp">ADD EXP</a>
-            </li>
-            <#if isAdmin>
-            <li class="nav-item">
-                <a class="nav-link" href="/userList">User list</a>
-            </li>
-            </#if>
         </ul>
         <div class="navbar-text mr-3">
-        ${name}
-            <@login.logout/>
         </div>
     </div>
+    <#if known>
+        ${name}
+        <@login.logout/>
+    </#if>
 </nav>

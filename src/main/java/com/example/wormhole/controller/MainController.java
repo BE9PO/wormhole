@@ -7,8 +7,12 @@ import com.example.wormhole.repository.ExaminationRepository;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
 import com.example.wormhole.service.CryptFileService;
+import com.example.wormhole.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,9 +59,9 @@ public class MainController {
     }
 
     @GetMapping("/solve")
-    public String solve (Model model){
+    public String solve(Model model) {
         Iterable<Examination> examinations = examinationRepository.findAll();
-        model.addAttribute("exps",examinations);
+        model.addAttribute("exps", examinations);
         return "solve";
     }
 
@@ -104,7 +109,7 @@ public class MainController {
     }
 
 
-    @PostMapping("filter")
+    @PostMapping("/filter")
     public String filter(@RequestParam String filter, Model model) {
         Iterable<Message> messageList;
 
@@ -117,17 +122,27 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("addExp")
-    public String addExp(@RequestParam String code, Model model) {
+    @PostMapping("/addExp")
+    public String addExp(@RequestParam String code,
+                         String agency,
+                         String fullUserName,
+                         String fullUserSurname,
+                         Model model) {
         Examination examination = new Examination();
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String investigator = auth.getName();
+        Date date = new Date(System.currentTimeMillis());
         examination.setCode(code);
+        examination.setAgency(agency);
+        examination.setInvestigator(investigator);
+        examination.setDateInput(date);
+
         examinationRepository.save(examination);
-        return "main";
+        return "/addExp";
     }
 
     @GetMapping("/addExp")
-    public  String addExp (Model model){
+    public String addExp(Model model) {
         return "addExp";
     }
 

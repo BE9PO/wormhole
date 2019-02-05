@@ -16,6 +16,10 @@ public class User implements UserDetails {
 
     private String username;
 
+    private String fullUserName;
+
+    private String fullUserSurname;
+
     private String password;
 
     private Boolean isActive;
@@ -63,6 +67,22 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFullUserName() {
+        return fullUserName;
+    }
+
+    public String getFullUserSurname() {
+        return fullUserSurname;
+    }
+
+    public void setFullUserSurname(String fullUserSurname) {
+        this.fullUserSurname = fullUserSurname;
+    }
+
+    public void setFullUserName(String fullUserName) {
+        this.fullUserName = fullUserName;
     }
 
     @Override
