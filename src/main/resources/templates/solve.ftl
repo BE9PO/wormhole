@@ -18,7 +18,7 @@
         <#list exps as exps>
             <tr>
                 <th scope="row">${exps.getId()}</th>
-                <td>${exps.getCode()}</td>
+                <td><a href="" class="text-decoration-none">${exps.getCode()}</a></td>
                 <td>${exps.getAgency()}</td>
                 <td>${exps.getInvestigator()}</td>
                 <td>${exps.getDateInput()}</td>

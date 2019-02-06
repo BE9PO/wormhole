@@ -1,6 +1,7 @@
 package com.example.wormhole.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Examination {
 
     private String code;
 
-    private Date dateInput;
+    private LocalDate dateInput;
 
     private Date dateOutput;
 
@@ -45,11 +46,11 @@ public class Examination {
         this.code = code;
     }
 
-    public Date getDateInput() {
+    public LocalDate getDateInput() {
         return dateInput;
     }
 
-    public void setDateInput(Date dateInput) {
+    public void setDateInput(LocalDate dateInput) {
         this.dateInput = dateInput;
     }
 

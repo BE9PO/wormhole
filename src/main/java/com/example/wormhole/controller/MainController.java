@@ -7,11 +7,11 @@ import com.example.wormhole.repository.ExaminationRepository;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
 import com.example.wormhole.service.CryptFileService;
-import com.example.wormhole.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.joda.DateTimeParser;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -125,17 +124,17 @@ public class MainController {
     @PostMapping("/addExp")
     public String addExp(@RequestParam String code,
                          String agency,
-                         String fullUserName,
-                         String fullUserSurname,
+                         String date,
                          Model model) {
         Examination examination = new Examination();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String investigator = auth.getName();
-        Date date = new Date(System.currentTimeMillis());
+        //Date date = new Date(System.currentTimeMillis());
         examination.setCode(code);
         examination.setAgency(agency);
         examination.setInvestigator(investigator);
-        examination.setDateInput(date);
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+        examination.setDateInput(localDate);
 
         examinationRepository.save(examination);
         return "/addExp";
@@ -145,5 +144,20 @@ public class MainController {
     public String addExp(Model model) {
         return "addExp";
     }
+
+//    @PostMapping("/material")
+//    public String material(@RequestParam Examination examination,
+//                         Date output,
+//                         String conclusion,
+//                         Model model) {
+//       Optional<Examination> examinationList = examinationRepository.findById(examination.getId());
+//       Examination examination1Red = examinationList.get();
+//
+//       examination1Red.setDateOutput(output);
+//
+//
+//        return "/material";
+//    }
+
 
 }
