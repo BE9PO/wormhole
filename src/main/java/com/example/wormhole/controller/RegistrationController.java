@@ -25,7 +25,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(User user,
                           String fullName,
-                          String surname,
+                          String lastName,
                           Model model) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
@@ -35,7 +35,7 @@ public class RegistrationController {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setFullUserName(fullName);
-        user.setFullUserSurname(surname);
+        user.setFullUserLastName(lastName);
         user.setDateOfRegistration(System.currentTimeMillis());
         userRepository.save(user);
         return "redirect:/login";

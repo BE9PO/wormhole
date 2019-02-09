@@ -3,8 +3,6 @@
 <@c.page>
 Add new user
    ${message!}
-    <#--<@l.login "/registration" true></@l.login>-->
-
     <form action="/registration" method="post">
         <div class="form-group row">
             <label for="inputLogin3" class="col-sm-2 col-form-label">Name</label>

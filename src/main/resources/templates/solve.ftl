@@ -17,8 +17,10 @@
         <tbody>
         <#list exps as exps>
             <tr>
-                <th scope="row">${exps.getId()}</th>
-                <td><a href="" class="text-decoration-none">${exps.getCode()}</a></td>
+                <th scope="row">
+                <a href="/material?exmID=${exps.getId()}" type="submit" class="text-decoration-none">${exps.getId()}</a>
+                </th>
+                <td>${exps.getCode()}</td>
                 <td>${exps.getAgency()}</td>
                 <td>${exps.getInvestigator()}</td>
                 <td>${exps.getDateInput()}</td>

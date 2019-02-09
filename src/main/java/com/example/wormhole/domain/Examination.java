@@ -2,7 +2,6 @@ package com.example.wormhole.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -15,13 +14,15 @@ public class Examination {
 
     private LocalDate dateInput;
 
-    private Date dateOutput;
+    private LocalDate dateOutput;
 
-    private Date dateStop;
+    private LocalDate dateStop;
 
-    private Date resumed;
+    private LocalDate resumed;
 
     private String investigator;
+
+    private String conclusions;
 
     private String agency;
 
@@ -54,27 +55,27 @@ public class Examination {
         this.dateInput = dateInput;
     }
 
-    public Date getDateOutput() {
+    public LocalDate getDateOutput() {
         return dateOutput;
     }
 
-    public void setDateOutput(Date dateOutput) {
+    public void setDateOutput(LocalDate dateOutput) {
         this.dateOutput = dateOutput;
     }
 
-    public Date getDateStop() {
+    public LocalDate getDateStop() {
         return dateStop;
     }
 
-    public void setDateStop(Date dateStop) {
+    public void setDateStop(LocalDate dateStop) {
         this.dateStop = dateStop;
     }
 
-    public Date getResumed() {
+    public LocalDate getResumed() {
         return resumed;
     }
 
-    public void setResumed(Date resumed) {
+    public void setResumed(LocalDate resumed) {
         this.resumed = resumed;
     }
 
@@ -92,6 +93,14 @@ public class Examination {
 
     public void setAgency(String agency) {
         this.agency = agency;
+    }
+
+    public String getConclusions() {
+        return conclusions;
+    }
+
+    public void setConclusions(String conclusions) {
+        this.conclusions = conclusions;
     }
 
     public Set<TypeExamination> getTypeExaminations() {

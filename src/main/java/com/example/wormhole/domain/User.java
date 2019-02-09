@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
     private String fullUserName;
 
-    private String fullUserSurname;
+    private String fullUserLastName;
 
     private String password;
 
@@ -73,12 +73,12 @@ public class User implements UserDetails {
         return fullUserName;
     }
 
-    public String getFullUserSurname() {
-        return fullUserSurname;
+    public String getFullUserLastName() {
+        return fullUserLastName;
     }
 
-    public void setFullUserSurname(String fullUserSurname) {
-        this.fullUserSurname = fullUserSurname;
+    public void setFullUserLastName(String fullUserLastName) {
+        this.fullUserLastName = fullUserLastName;
     }
 
     public void setFullUserName(String fullUserName) {
@@ -145,5 +145,9 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getNameAndLastName() {
+        return getFullUserLastName() + " " + getFullUserName();
     }
 }
