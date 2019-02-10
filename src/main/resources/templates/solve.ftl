@@ -1,5 +1,38 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Search
+    </button>
+    <div class="collapse" id="collapseExample">
+
+
+
+        <div class="card card-body">
+            <form method="post">
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Set code</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="3.5/.....">
+
+                        <label for="inputEmail4">Date input</label>
+                        <input type="date" class="form-control" id="dateInput" name="dateInput">
+
+                        <label for="inputEmail4">Date output</label>
+                        <input type="date" class="form-control" id="dateOut" name="dateOut">
+
+                    </div>
+                </div>
+
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary">Find</button>
+            </form>
+
+        </div>
+
+
+    </div>
     <table class="table">
         <thead>
         <tr>

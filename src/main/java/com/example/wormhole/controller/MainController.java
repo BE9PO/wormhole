@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,17 +109,23 @@ public class MainController {
     }
 
 
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Model model) {
-        Iterable<Message> messageList;
+    @PostMapping("/solve")
+    public String filter(@RequestParam String code,
+                         String dateInput,
+                         String dateOut,
+                         Model model) {
+        Iterable<Examination> examinationsList;
+//        if (code.isEmpty()) {
+//            examinationsList = examinationRepository.findAll();
+//        } else {
+//            //examinationsList = examinationRepository.findAllByCodeOrDateInputOrDateOutput(code,dateInput,dateOut);
+//        }
 
-        if (filter.isEmpty()) {
-            messageList = messageRepository.findAll();
-        } else {
-            messageList = messageRepository.findByMessage(filter);
-        }
-        model.addAttribute("messages", messageList);
-        return "main";
+        LocalDate datIN = DataUtil.getLocalDate(dateInput);
+        LocalDate datOUT = DataUtil.getLocalDate(dateOut);
+        examinationsList = examinationRepository.findAllByCodeOrDateInputOrDateOutput(code, datIN, datOUT);
+
+        model.addAttribute("exps", examinationsList);
+        return "/solve";
     }
-
 }

@@ -2,7 +2,7 @@
 <@c.page>
 
 
-    <form method="post">
+   <form method="post">
 
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <input type ="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 

@@ -60,6 +60,7 @@ public class ExaminationController {
         examination.setAgency(agency);
         examination.setInvestigator(user.getNameAndLastName());
         examination.setDateInput(DataUtil.getLocalDate(date));
+        examination.setDaysInProduction();
         examinationRepository.save(examination);
         return "/addExp";
     }
