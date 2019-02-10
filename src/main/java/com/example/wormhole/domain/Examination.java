@@ -2,6 +2,7 @@ package com.example.wormhole.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 @Entity
@@ -25,6 +26,8 @@ public class Examination {
     private String conclusions;
 
     private String agency;
+
+    private int daysInProduction;
 
     @ElementCollection(targetClass = TypeExamination.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "Examination_Type")
@@ -61,6 +64,8 @@ public class Examination {
 
     public void setDateOutput(LocalDate dateOutput) {
         this.dateOutput = dateOutput;
+
+
     }
 
     public LocalDate getDateStop() {
@@ -110,4 +115,23 @@ public class Examination {
     public void setTypeExaminations(Set<TypeExamination> typeExaminations) {
         this.typeExaminations = typeExaminations;
     }
+
+    public int getDaysInProduction() {
+        return daysInProduction;
+    }
+
+    public void setDaysInProduction(int daysInProduction) {
+        this.daysInProduction = daysInProduction;
+    }
+
+    public void setDaysInProduction() {
+        if (dateOutput == null) {
+            Period periodOfProduction = getDateInput().until(LocalDate.now());
+            setDaysInProduction(periodOfProduction.getDays());
+        } else if (dateOutput.isAfter(dateInput)) {
+            Period periodOfProduction = getDateInput().until(getDateOutput());
+            setDaysInProduction(periodOfProduction.getDays());
+        }
+    }
+
 }

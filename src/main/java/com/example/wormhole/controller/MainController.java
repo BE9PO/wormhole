@@ -33,18 +33,16 @@ public class MainController {
     private final MessageRepository messageRepository;
     private final FileImageRepository imageRepository;
     private final ExaminationRepository examinationRepository;
-    private final UserRepository userRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     @Autowired
     public MainController(MessageRepository messageRepository, FileImageRepository imageRepository, FileImageRepository imageRepository1,
-                          ExaminationRepository examinationRepository, UserRepository userRepository) {
+                          ExaminationRepository examinationRepository) {
         this.messageRepository = messageRepository;
         this.imageRepository = imageRepository1;
         this.examinationRepository = examinationRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
@@ -122,54 +120,5 @@ public class MainController {
         model.addAttribute("messages", messageList);
         return "main";
     }
-
-    @PostMapping("/addExp")
-    public String addExp(@RequestParam String code,
-                         String agency,
-                         String date,
-                         Model model) {
-        Examination examination = new Examination();
-        User user = userRepository.findByUsername(AuthenticationUtil.getAuthUserName());
-        examination.setCode(code);
-        examination.setAgency(agency);
-        examination.setInvestigator(user.getNameAndLastName());
-        examination.setDateInput(DataUtil.getLocalDate(date));
-        examinationRepository.save(examination);
-        return "/addExp";
-    }
-
-    @GetMapping("/addExp")
-    public String addExp(Model model) {
-        return "addExp";
-    }
-
-    @GetMapping("/material")
-    public String editMaterial(@RequestParam String exmID,
-            Model model){
-        return "material";
-    }
-
-    @PostMapping("/material")
-    public String editMaterial(@RequestParam String conclusions,
-                               @RequestParam String dateOut,
-                               @RequestParam String exmID,
-                               Model model){
-        Long id = Long.parseLong(exmID);
-        Optional<Examination> examination = examinationRepository.findById(id);
-        Examination editedExmanitation = examination.get();
-        editedExmanitation.setDateOutput(DataUtil.getLocalDate(dateOut));
-        editedExmanitation.setConclusions(conclusions);
-        editedExmanitation.setCode("OK!!!!!!!");
-        examinationRepository.save(editedExmanitation);//SAVING@!!!!
-
-
-        return "redirect:/solve";
-    }
-
-
-
-
-
-
 
 }
