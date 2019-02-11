@@ -36,7 +36,6 @@ public class ExaminationController {
         Examination editedExamination = examination.get();
         editedExamination.setDateOutput(DataUtil.getLocalDate(dateOut));
         editedExamination.setConclusions(conclusions);
-        editedExamination.setCode("OK!!!!!!!");
         examinationRepository.save(editedExamination);//SAVING@!!!!
 
 

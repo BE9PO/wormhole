@@ -115,15 +115,22 @@ public class MainController {
                          String dateOut,
                          Model model) {
         Iterable<Examination> examinationsList;
-//        if (code.isEmpty()) {
-//            examinationsList = examinationRepository.findAll();
-//        } else {
-//            //examinationsList = examinationRepository.findAllByCodeOrDateInputOrDateOutput(code,dateInput,dateOut);
-//        }
-
         LocalDate datIN = DataUtil.getLocalDate(dateInput);
         LocalDate datOUT = DataUtil.getLocalDate(dateOut);
-        examinationsList = examinationRepository.findAllByCodeOrDateInputOrDateOutput(code, datIN, datOUT);
+
+        if (!code.isEmpty() && !datIN.isEqual(LocalDate.MIN)&&!datOUT.isEqual(LocalDate.MIN)){
+            examinationsList = examinationRepository.findAllByCodeAndDateInputAndDateOutput(code,datIN,datOUT);
+        }
+        else if (!code.isEmpty() && !datIN.isEqual(LocalDate.MIN)&&datOUT.isEqual(LocalDate.MIN)){
+            examinationsList = examinationRepository.findAllByCodeAndDateInput(code,datIN);
+        }else if (!code.isEmpty()&&!datOUT.isEqual(LocalDate.MIN)&&datIN.isEqual(LocalDate.MIN)){
+            examinationsList = examinationRepository.findAllByCodeAndDateOutput(code,datOUT);
+        }else if (!datIN.isEqual(LocalDate.MIN)&&!datOUT.isEqual(LocalDate.MIN)&&code.isEmpty()){
+            examinationsList = examinationRepository.findAllByDateInputAndDateOutput(datIN,datOUT);
+        }
+        else {
+            examinationsList = examinationRepository.findAllByCodeOrDateInputOrDateOutput(code, datIN, datOUT);
+        }
 
         model.addAttribute("exps", examinationsList);
         return "/solve";

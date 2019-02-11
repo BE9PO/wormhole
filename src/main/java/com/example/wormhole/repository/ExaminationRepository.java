@@ -23,6 +23,8 @@ public interface ExaminationRepository extends CrudRepository<Examination,Long> 
 
     Iterable<Examination> findAllByDateInputAndDateOutput (LocalDate dateInput, LocalDate dateOutput);
 
+    Iterable<Examination> findAllByCodeAndDateInputAndDateOutput (String code, LocalDate dateInput, LocalDate dateOutput);
+
 
 
 }

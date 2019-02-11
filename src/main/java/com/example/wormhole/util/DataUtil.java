@@ -11,7 +11,7 @@ public class DataUtil {
        }
        catch (Exception e){
            //TODO поправить костыль
-           return LocalDate.now();
+           return LocalDate.MIN;
        }
 
     }
