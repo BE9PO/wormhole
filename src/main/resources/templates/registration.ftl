@@ -1,8 +1,8 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/login.ftl" as l>
 <@c.page>
-Add new user
-   ${message!}
+    Add new user
+    ${message!}
     <form action="/registration" method="post">
         <div class="form-group row">
             <label for="inputLogin3" class="col-sm-2 col-form-label">Name</label>
@@ -13,7 +13,7 @@ Add new user
         <div class="form-group row">
             <label for="inputLogin3" class="col-sm-2 col-form-label">Surname</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="surname" placeholder="Surname">
+                <input type="text" class="form-control" name="lastName" placeholder="Surname">
             </div>
         </div>
         <div class="form-group row">

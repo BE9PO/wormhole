@@ -64,8 +64,6 @@ public class Examination {
 
     public void setDateOutput(LocalDate dateOutput) {
         this.dateOutput = dateOutput;
-
-
     }
 
     public LocalDate getDateStop() {

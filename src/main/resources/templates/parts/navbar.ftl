@@ -20,7 +20,7 @@
         </div>
     </div>
     <#if known>
-        ${name}
+        <div class="p-3">${name}</div>
         <@login.logout/>
     </#if>
 </nav>
