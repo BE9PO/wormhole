@@ -9,12 +9,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/solve">view the list</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/addExp">add to the list</a>
-            </li>
+            <#if known>
+                <li class="nav-item">
+                    <a class="nav-link" href="/solve">view the list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addExp">add to the list</a>
+                </li>
+            </#if>
+            <#if !known>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">login</a>
+                </li>
+            </#if>
         </ul>
         <div class="navbar-text mr-3">
         </div>

@@ -13,19 +13,19 @@ public class Message {
 
     private String message;
 
-    @ElementCollection(targetClass = FileImage.class, fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = FileExamination.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "message_images")
-    private List<FileImage> images;
+    private List<FileExamination> images;
 
     private Long timeOfDestruction;
 
     private Long departureDate;
 
-    public List<FileImage> getImages() {
+    public List<FileExamination> getImages() {
         return images;
     }
 
-    public void setImages(List<FileImage> images) {
+    public void setImages(List<FileExamination> images) {
         this.images = images;
     }
 

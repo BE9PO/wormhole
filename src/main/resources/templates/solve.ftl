@@ -32,6 +32,7 @@
             <th scope="col">date input</th>
             <th scope="col">date output</th>
             <th scope="col">days in prod</th>
+            <th scope="col">conclusions</th>
         </tr>
         </thead>
         <tbody>
@@ -59,6 +60,13 @@
                     <#else >
                         ${exps.setDaysInProduction()}
                         ${exps.getDaysInProduction()}
+                    </#if>
+                </td>
+                <td>
+                    <#if exps.dateOutput??>
+                        ${exps.getConclusions()}
+                    <#else >
+                        in progress
                     </#if>
                 </td>
             </tr>

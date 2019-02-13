@@ -1,17 +1,13 @@
 package com.example.wormhole.controller;
 
 import com.example.wormhole.domain.Examination;
-import com.example.wormhole.domain.FileImage;
+import com.example.wormhole.domain.FileExamination;
 import com.example.wormhole.domain.Message;
-import com.example.wormhole.domain.User;
 import com.example.wormhole.repository.ExaminationRepository;
 import com.example.wormhole.repository.FileImageRepository;
 import com.example.wormhole.repository.MessageRepository;
-import com.example.wormhole.repository.UserRepository;
 import com.example.wormhole.service.CryptFileService;
-import com.example.wormhole.util.AuthenticationUtil;
 import com.example.wormhole.util.DataUtil;
-import freemarker.template.utility.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,7 +22,6 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -72,8 +67,8 @@ public class MainController {
             Model model
     ) throws IOException {
         Message newMessage = new Message();
-        List<FileImage> fileImages = new ArrayList<>();
-        FileImage fileImage = new FileImage();
+        List<FileExamination> fileExaminations = new ArrayList<>();
+        FileExamination fileExamination = new FileExamination();
         CryptFileService cryptFileService = new CryptFileService();
 
         if (file != null && !file.getOriginalFilename().isEmpty()) {
@@ -91,17 +86,17 @@ public class MainController {
 
             //file.transferTo(new File(uploadPath + "/" + resultFileName));
             file.transferTo(tempFile);
-            fileImage.setName(resultFileName);
-            fileImage.setDateOfLoad(System.currentTimeMillis());
+            fileExamination.setName(resultFileName);
+            fileExamination.setDateOfLoad(System.currentTimeMillis());
 
         }
 
 
-        fileImages.add(fileImage);
+        fileExaminations.add(fileExamination);
         newMessage.setMessage(text);
-        newMessage.setImages(fileImages);
-        //save fileImage
-        imageRepository.save(fileImage);
+        newMessage.setImages(fileExaminations);
+        //save fileExamination
+        imageRepository.save(fileExamination);
         messageRepository.save(newMessage);
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
